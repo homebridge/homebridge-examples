@@ -1,0 +1,38 @@
+{
+  "name": "homebridge-accessory-example",
+  "version": "1.0.0",
+  "description": "An example accessory plugin for homebridge written in Typescript",
+  "main": "dist/accessory.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "rimraf ./dist && tsc",
+    "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andreas Bauer <mail@anderl-bauer.de>",
+  "engines": {
+    "homebridge": ">=1.0.0"
+  },
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "license": "ISC",
+  "files": [
+    "LICENSE",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/homebridge/homebridge-examples.git"
+  },
+  "bugs": {
+    "url": "http://github.com/homebridge/homebridge-examples/issues"
+  },
+  "devDependencies": {
+    "@types/node": "10.17.19",
+    "typescript": "^3.8.3",
+    "rimraf": "^3.0.2",
+    "homebridge": "^0.4.54-beta.51"
+  }
+}
