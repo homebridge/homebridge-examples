@@ -33,6 +33,6 @@
     "@types/node": "10.17.19",
     "typescript": "^3.8.3",
     "rimraf": "^3.0.2",
-    "homebridge": "^0.4.54-beta.51"
+    "homebridge": "^0.4.54-beta.52"
   }
 }

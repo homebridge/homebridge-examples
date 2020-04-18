@@ -5,7 +5,8 @@ import {
   CharacteristicValue,
   HAP,
   Logging,
-  Service
+  Service,
+  CharacteristicEventTypes
 } from "homebridge";
 
 export class ExampleSwitch implements AccessoryPlugin {
@@ -26,11 +27,11 @@ export class ExampleSwitch implements AccessoryPlugin {
 
     this.switchService = new hap.Service.Switch(name);
     this.switchService.getCharacteristic(hap.Characteristic.On)
-      .on(hap.CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
+      .on(CharacteristicEventTypes.GET, (callback: CharacteristicGetCallback) => {
         log.info("Current state of the switch was returned: " + (this.switchOn? "ON": "OFF"));
         callback(undefined, this.switchOn);
       })
-      .on(hap.CharacteristicEventTypes.SET, (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
+      .on(CharacteristicEventTypes.SET, (value: CharacteristicValue, callback: CharacteristicSetCallback) => {
         this.switchOn = value as boolean;
         log.info("Switch state was set to: " + (this.switchOn? "ON": "OFF"));
         callback();

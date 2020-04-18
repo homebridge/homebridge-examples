@@ -2,7 +2,8 @@ import ip from "ip";
 import {ChildProcess, spawn} from "child_process";
 import {
   CameraController,
-  CameraStreamingDelegate, HAP,
+  CameraStreamingDelegate,
+  HAP,
   PrepareStreamCallback,
   PrepareStreamRequest,
   PrepareStreamResponse,
@@ -130,7 +131,7 @@ export class ExampleFFMPEGStreamingDelegate implements CameraStreamingDelegate {
     const sessionId = request.sessionID;
 
     switch (request.type) {
-      case this.hap.StreamRequestTypes.START:
+      case StreamRequestTypes.START:
         const sessionInfo = this.pendingSessions[sessionId];
 
         const video: VideoInfo = request.video;
@@ -158,8 +159,8 @@ export class ExampleFFMPEGStreamingDelegate implements CameraStreamingDelegate {
           `-c:v libx264 -pix_fmt yuv420p -r ${fps} -an -sn -dn -b:v ${maxBitrate}k -bufsize ${2*maxBitrate}k -maxrate ${maxBitrate}k ` +
           `-payload_type ${payloadType} -ssrc ${ssrc} -f rtp `; // -profile:v ${profile} -level:v ${level}
 
-        if (cryptoSuite !== this.hap.SRTPCryptoSuites.NONE) { // actually ffmpeg just supports AES_CM_128_HMAC_SHA1_80
-          videoffmpegCommand += `-srtp_out_suite ${this.hap.SRTPCryptoSuites[cryptoSuite]} -srtp_out_params ${videoSRTP} s`;
+        if (cryptoSuite === SRTPCryptoSuites.AES_CM_128_HMAC_SHA1_80) { // actually ffmpeg just supports AES_CM_128_HMAC_SHA1_80
+          videoffmpegCommand += `-srtp_out_suite AES_CM_128_HMAC_SHA1_80 -srtp_out_params ${videoSRTP} s`;
         }
 
         videoffmpegCommand += `rtp://${address}:${videoPort}?rtcpport=${videoPort}&localrtcpport=${videoPort}&pkt_size=${mtu}`;
@@ -207,12 +208,12 @@ export class ExampleFFMPEGStreamingDelegate implements CameraStreamingDelegate {
         delete this.pendingSessions[sessionId];
 
         break;
-      case this.hap.StreamRequestTypes.RECONFIGURE:
+      case StreamRequestTypes.RECONFIGURE:
         // not supported by this example
         console.log("Received (unsupported) request to reconfigure to: " + JSON.stringify(request.video));
         callback();
         break;
-      case this.hap.StreamRequestTypes.STOP:
+      case StreamRequestTypes.STOP:
         const ffmpegProcess = this.ongoingSessions[sessionId];
 
         try {
