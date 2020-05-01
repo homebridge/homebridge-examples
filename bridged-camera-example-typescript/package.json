@@ -37,6 +37,6 @@
     "@types/ip": "^1.1.0",
     "typescript": "^3.8.3",
     "rimraf": "^3.0.2",
-    "homebridge": "^0.4.54-beta.52"
+    "homebridge": "^1.0.4"
   }
 }
