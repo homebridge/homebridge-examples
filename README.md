@@ -18,6 +18,7 @@ After that run the following command to compile the Typescript files into Javasc
 npm run build
 ```
 
+
 If you're trying to get one of the example plugins to show up in your homebridge installation without installing it
 from npm just clone this repo.
 Then, just cd into one of the plugin folders and run
