@@ -21,11 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-        working-directory: ${{ matrix.plugin_dir }}
         with:
           node-version: ${{ matrix.node_version }}
           registry-url: 'https://registry.npmjs.org'
           cache: 'npm'
+          cache-dependency-path: ${{ matrix.plugin_dir }}
 
       - name: install
         run: npm ci
