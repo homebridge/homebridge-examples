@@ -1,0 +1,38 @@
+name: Node Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        node_version: [16]
+        os: [ubuntu-latest]
+        plugin_dir: [accessory-example-typescript, bridged-camera-example-typescript, dynamic-platform-example-typescript, independent-platform-example-typescript, static-platform-example-typescript]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node_version }}
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'npm'
+
+      - name: install
+        run: npm ci
+        working-directory: ${{ matrix.plugin_dir }}
+        env:
+          CI: true
+      - name: build
+        run: npm run build --if-present
+        working-directory: ${{ matrix.plugin_dir }}
+        env:
+          CI: true
