@@ -23,8 +23,15 @@ If you're trying to get one of the example plugins to show up in your homebridge
 from npm just clone this repo.
 Then, just cd into one of the plugin folders and run
 ```
-npm link
+sudo hb-service link
 ```
+This creates a symlink from the plugin directory to /var/lib/homebridge/node_modules/plugin_name.
+
+To undo this run
+```
+sudo hb-service unlink
+```
+
 Pay attention to not start homebridge with the --strict-plugin-resolution flag. A standard installation of 
 homebridge might start it with that flag in a start script, located in /opt/homebridge on linux.
 
